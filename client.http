@@ -1,0 +1,15 @@
+POST http://localhost:3000/login
+content-type:application/json
+
+{
+    "username":"sufi",
+    "password":"1234"
+
+}
+###
+
+GET http://localhost:3000/bye
+
+###
+
+GET http://localhost:3000/
