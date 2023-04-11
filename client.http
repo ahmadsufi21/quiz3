@@ -1,15 +1,23 @@
+GET http://localhost:3000/register
+content-type: application/json
+
+###
 POST http://localhost:3000/login
-content-type:application/json
+content-type: application/json
 
 {
     "username":"sufi",
-    "password":"1234"
+    "password":"1234",
+    
 
 }
-###
-
-GET http://localhost:3000/bye
 
 ###
+POST http://localhost:3000/login
+content-type: application/json
 
-GET http://localhost:3000/
+{
+    "username":"sufi",
+    "password":"1234",
+    "name":"sufi hamdi",
+    "email":"ahmadhamdi2111@gmail.com"
