@@ -2,26 +2,34 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+
 app.use(express.json())
 
 app.post('/login', (req,res) =>{
     console.log(req.body)
 
-    let result =login(
-        req.body.username,
-        req.body.password
+    let result =login(req.body.username,req.body.password)
+        
+    let token =generateToken(result)
+    res.send(token)
+})
+app.get('/',(req,res)=>{
+  res.send("Hello UTeM!")
+}
+app.get('/bye',verifyToken,(req,res)=>{
+    res.send("BYe2 UTeM")
+})
+   app.post('/register',(req,res)=>{
+    let result =register(
+      req.body.username,
+      req.body.password,
+      req.body.name,
+      req.body.email
     )
-    
-    res.send('login')
+    let token=generateToken(result)
+    res.send(result)
 })
 
-app.get('/', (req, res) => {
-  res.send('DRAGON IS COMING!')
-})
-
-app.get('/bruh', (req, res) => {
-    res.send('GOODBYE')
-  })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
@@ -77,11 +85,28 @@ function register(reqUsername,reqPassword,reqName,reqEmail)
       name : reqName,
       email:reqEmail})
 }
+conswt=require('jsonwebtoken');
+function generateToken(userdata){
+    const token =jwt.sign(
+      userdata,
+      'karok',
+      {expiresIn:60}
+    );
+    return token
+}
+ function verifyToken(req,res,next){
+  let header=
+  req.headers.authorization
+  console.log(header)
 
-//try to login
-//login("sufi","1234")
-console.log(login("sufi","1234"))
-//login("sufi","password")
+  let token=header.split('')[1]
 
-register("sarah","0000","sarahjeman","sarahhhh00@gmail.com")
-console.log(login("sarah","0000"))
+  jwt.verify(token,'karok'
+  function(err,decoded){
+    if(err){
+      res.send("Invalid Token")
+    }
+  req.user =decoded
+  next()
+ });
+ }
